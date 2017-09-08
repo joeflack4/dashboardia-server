@@ -1,0 +1,2 @@
+"""Init."""
+from .model import *

@@ -2,7 +2,9 @@ astroid==1.5.3
 click==6.7
 docunit==0.1.2
 Flask==0.12.2
+Flask-Cors==3.0.3
 Flask-Script==2.0.5
+Flask-SQLAlchemy==2.2
 gunicorn==19.7.1
 isort==4.2.15
 itsdangerous==0.24
@@ -15,5 +17,7 @@ pydocstyle==2.0.0
 pylint==1.7.2
 six==1.10.0
 snowballstemmer==1.2.1
+SQLAlchemy==1.1.14
 Werkzeug==0.12.2
 wrapt==1.10.11
+xlrd==1.1.0
