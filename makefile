@@ -1,6 +1,6 @@
 PYTHON=python3
-SERVER_DIR=./server/
-CLIENT_DIR=./client/
+SERVER_DIR=../server/
+CLIENT_DIR=../client/
 SRC=${SERVER_DIR}dashboardia/
 TEST=${SERVER_DIR}test/
 

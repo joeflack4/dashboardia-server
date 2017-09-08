@@ -1,3 +1,14 @@
+# Dashboardia-specific Ignores
+*_dev
+*_ignored
+*data/
+
+# IDE
+.idea
+
+# OSX
+.DS_Store
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

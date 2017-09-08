@@ -6,12 +6,18 @@ from flask_script import Manager, Shell
 import xlrd
 
 from dashboardia import app, db
-from dashboardia.model import Ledger
+from dashboardia.model import Ledger, UI
 
 
 manager = Manager(app)
-shell_context = dict(app=app, db=db, Ledger=Ledger)
+shell_context = dict(app=app, db=db)
+ORDERED_MODEL_MAP = (
+    ('ledger', Ledger),
+    ('ui', UI)
+)
 manager.add_command('shell', Shell(make_context=shell_context))
+for key, val in [mdl for mdl in ORDERED_MODEL_MAP]:
+    shell_context[key] = val
 
 
 # TODO: Add to joefuncs.
@@ -27,10 +33,7 @@ def get_file_by_glob(pattern):
     return glob(pattern)[0]
 
 
-SRC_DATA = get_file_by_glob('./data/api_data*.xlsx')
-ORDERED_MODEL_MAP = (
-    ('ledger', Ledger),
-)
+SRC_DATA = get_file_by_glob('./data/data*.xlsx')
 
 
 # TODO: Create package to import to DB from Excel file.
