@@ -5,7 +5,6 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 
-from .routes import client
 from .config import config
 
 
@@ -15,6 +14,7 @@ db = SQLAlchemy()
 db.init_app(app)
 CORS(app)
 app.static_folder = getenv('APP_STATIC_DIR', '../../client/assets')
+from .routes.routes import client
 app.register_blueprint(client)
 
 

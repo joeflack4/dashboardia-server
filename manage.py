@@ -1,4 +1,5 @@
 """Application manager."""
+from os import path
 from glob import glob
 import csv
 
@@ -6,14 +7,16 @@ from flask_script import Manager, Shell
 import xlrd
 
 from dashboardia import app, db
-from dashboardia.model import Ledger, UI
+from dashboardia.model.model import Ledger, UI, ModuleSection, ModuleDashboard
 
 
 manager = Manager(app)
 shell_context = dict(app=app, db=db)
 ORDERED_MODEL_MAP = (
     ('ledger', Ledger),
-    ('ui', UI)
+    ('ui', UI),
+    ('module_section', ModuleSection),
+    ('module_dashboard', ModuleDashboard)
 )
 manager.add_command('shell', Shell(make_context=shell_context))
 for key, val in [mdl for mdl in ORDERED_MODEL_MAP]:
@@ -33,21 +36,22 @@ def get_file_by_glob(pattern):
     return glob(pattern)[0]
 
 
-SRC_DATA = get_file_by_glob('./data/data*.xlsx')
+SRC_DATA = get_file_by_glob(path.dirname(path.realpath(__file__))
+                            + '/data/data*.xlsx')
 
 
 # TODO: Create package to import to DB from Excel file.
-def init_from_source(path, model):
+def init_from_source(file_path, model):
     """Initialize DB table data from csv file.
 
     Initialize table data from csv source data files associated with the
     corresponding data model.
 
     Args:
-        path (str): Path to csv data file.
+        file_path (str): Path to csv data file.
         model (class): SqlAlchemy model class.
     """
-    with open(path, newline='', encoding='utf-8') as csvfile:
+    with open(file_path, newline='', encoding='utf-8') as csvfile:
         csvreader = csv.DictReader(csvfile)
         for row in csvreader:
             record = model(**row)
